@@ -1,6 +1,6 @@
 import React, { useEffect, useRef, useState, useReducer } from 'react';
 import '../../ActivityLevels.less';
-import { compileArduinoCode, handleSave } from '../../Utils/helpers';
+import { compileArduinoCode, handleSave,getJS } from '../../Utils/helpers';
 import { message, Spin, Row, Col, Alert, Dropdown, Menu } from 'antd';
 import { getSaves } from '../../../../Utils/requests';
 import CodeModal from '../modals/CodeModal';
@@ -13,6 +13,7 @@ import {
   handleCloseConnection,
   handleOpenConnection,
 } from '../../Utils/consoleHelpers';
+//import MentorActivityDetailModal, {languageChoice} from '../../../../views/Mentor/Classroom/Home/MentorActivityDetailModal';
 import ArduinoLogo from '../Icons/ArduinoLogo';
 import PlotterLogo from '../Icons/PlotterLogo';
 import { useNavigate } from 'react-router-dom';
@@ -231,6 +232,25 @@ export default function StudentCanvas({ activity }) {
       pushEvent('undo');
     }
   };
+  const handleJS = () => {
+    
+    
+    
+    
+    try {
+      
+      const testJS = getJS(workspaceRef.current);
+      //console.log(testJS);
+        
+      
+    }
+    catch(err) {
+    
+      message.error("Can not compile");
+    }
+    
+    
+  }
 
   const handleRedo = () => {
     if (workspaceRef.current.redoStack_.length > 0) {
@@ -432,6 +452,11 @@ export default function StudentCanvas({ activity }) {
                           {hoverUndo && (
                             <div className='popup ModalCompile4'>Undo</div>
                           )}
+                        </button>
+                        <button
+                          onClick={handleJS}
+                        >Show Code
+                            
                         </button>
                         <button
                           onClick={handleRedo}

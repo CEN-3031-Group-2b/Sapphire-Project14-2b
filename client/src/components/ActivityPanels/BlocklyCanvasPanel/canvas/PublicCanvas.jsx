@@ -53,6 +53,7 @@ export default function PublicCanvas({ activity, isSandbox }) {
     if (workspaceRef.current.undoStack_.length > 0)
       workspaceRef.current.undo(false);
   };
+  
 
   const handleRedo = () => {
     if (workspaceRef.current.redoStack_.length > 0)
@@ -209,6 +210,8 @@ export default function PublicCanvas({ activity, isSandbox }) {
                             <div className='popup ModalCompile4'>Undo</div>
                           )}
                         </button>
+                        
+                        
                         <button
                           onClick={handleRedo}
                           id='link'

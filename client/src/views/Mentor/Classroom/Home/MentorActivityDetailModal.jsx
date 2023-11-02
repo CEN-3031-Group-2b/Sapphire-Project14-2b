@@ -11,6 +11,8 @@ import {
 import "../../../ContentCreator/ActivityEditor/ActivityEditor.less"
 import ActivityComponentTags from "../../../ContentCreator/ActivityEditor/components/ActivityComponentTags"
 
+
+
 const SCIENCE = 1
 const MAKING = 2
 const COMPUTATION = 3
@@ -34,6 +36,7 @@ const MentorActivityDetailModal = ({
   const [activityDetailsVisible, setActivityDetailsVisible] = useState(false)
   const [linkError, setLinkError] = useState(false)
   const [submitButton, setSubmitButton] = useState(0)
+  const [languageChoice, setLanguageChoice] = useState("arduino")
   const navigate = useNavigate()
 
   useEffect(() => {
@@ -94,6 +97,14 @@ const MentorActivityDetailModal = ({
     navigate("/activity")
   }
 
+  const handleLanguageChange = async (event) => {
+
+    setLanguageChoice(event.target.value);
+    
+ 
+  };
+  
+
   const handleViewActivityTemplate = async activity => {
     const allToolBoxRes = await getActivityToolboxAll()
     delete activity.selectedToolbox
@@ -104,6 +115,7 @@ const MentorActivityDetailModal = ({
     navigate("/activity")
   }
   const handleSave = async () => {
+    
     if (link) {
       const goodLink = checkURL(link)
       if (!goodLink) {
@@ -268,6 +280,15 @@ const MentorActivityDetailModal = ({
             span: 30,
           }}
         >
+          <label>
+            Choose Language for Activity
+            <select language = {languageChoice} onChange={(e) =>handleLanguageChange(e)}>
+              <option language = "arduino">Arduino</option>
+              <option language = "js">Javascript</option>
+            </select>
+          </label>
+          
+         
           <button id="save--set-activity-btn" onClick={() => setSubmitButton(1)}>
             Edit Student Template
           </button>
@@ -298,6 +319,7 @@ const MentorActivityDetailModal = ({
     </Modal>
     </div>
   )
+  
 }
 
 export default MentorActivityDetailModal
