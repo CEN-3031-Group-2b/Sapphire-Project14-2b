@@ -1,6 +1,6 @@
 import { Modal, Button, Typography, Menu } from 'antd';
 import React, { useState } from 'react';
-import { getArduino, getXml } from '../../Utils/helpers';
+import { getArduino, getXml, getJS } from '../../Utils/helpers';
 
 export default function CodeModal(props) {
   const [visible, setVisible] = useState(false);
@@ -29,8 +29,9 @@ export default function CodeModal(props) {
       ) : (
         <Menu.Item id='show-arduino-icon' onClick={showModal}>
           <i className='fas fa-code' />
-          &nbsp;Show Arduino Code
+          &nbsp;Show JavaScript Code
         </Menu.Item>
+        
       )}
       <Modal
         title={title}
@@ -48,7 +49,7 @@ export default function CodeModal(props) {
             <Text copyable style={{ whiteSpace: 'pre-wrap' }}>
               {title === 'XML'
                 ? getXml(workspaceRef, false)
-                : getArduino(workspaceRef, false)}
+                : getJS(workspaceRef, false)}
             </Text>
           </div>
         ) : null}

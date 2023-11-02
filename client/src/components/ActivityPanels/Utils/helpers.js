@@ -31,10 +31,10 @@ export const getXml = (workspaceRef, shouldAlert = true) => {
 };
 
 // Generates javascript code from blockly canvas
-export const getJS = (workspaceRef) => {
+export const getJS = (workspaceRef, shouldAlert = true) => {
   window.Blockly.JavaScript.INFINITE_LOOP_TRAP = null;
   let code = window.Blockly.JavaScript.workspaceToCode(workspaceRef);
-  alert(code);
+  if (shouldAlert) alert(code);
   return code;
 };
 
