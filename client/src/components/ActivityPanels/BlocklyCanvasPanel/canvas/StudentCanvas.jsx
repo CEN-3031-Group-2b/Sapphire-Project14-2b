@@ -36,6 +36,7 @@ export default function StudentCanvas({ activity }) {
   const [saves, setSaves] = useState({});
   const [lastSavedTime, setLastSavedTime] = useState(null);
   const [lastAutoSave, setLastAutoSave] = useState(null);
+  const [languageChoice, setLanguageChoice] = useState("arduino");
 
   const [forceUpdate] = useReducer((x) => x + 1, 0);
   const navigate = useNavigate();
@@ -232,25 +233,7 @@ export default function StudentCanvas({ activity }) {
       pushEvent('undo');
     }
   };
-  const handleJS = () => {
-    
-    
-    
-    
-    try {
-      
-      const testJS = getJS(workspaceRef.current);
-      //console.log(testJS);
-        
-      
-    }
-    catch(err) {
-    
-      message.error("Can not compile");
-    }
-    
-    
-  }
+ 
 
   const handleRedo = () => {
     if (workspaceRef.current.redoStack_.length > 0) {
@@ -342,6 +325,12 @@ export default function StudentCanvas({ activity }) {
       pushEvent('compile');
     }
   };
+  const handleLanguageChange = async (event) => {
+
+    setLanguageChoice(event.target.value);
+    
+ 
+  };
 
   const handleGoBack = () => {
     if (
@@ -364,7 +353,7 @@ export default function StudentCanvas({ activity }) {
         &nbsp; Show Serial Plotter
       </Menu.Item>
       <Menu.Item>
-        <CodeModal title={'Arduino Code'} workspaceRef={workspaceRef.current} />
+        <CodeModal title={languageChoice} workspaceRef={workspaceRef.current} />
       </Menu.Item>
     </Menu>
   );
@@ -431,6 +420,14 @@ export default function StudentCanvas({ activity }) {
                       </Col>
 
                       <Col className='flex flex-row' id='icon-align'>
+                        <label>
+                          Choose Language for Activity
+                          <select language = {languageChoice} onChange={(e) =>handleLanguageChange(e)}>
+                            <option language = "arduino">Arduino</option>
+                            <option language = "js">Javascript</option>
+                          </select>
+                        </label>
+                        
                         <button
                           onClick={handleUndo}
                           id='link'
@@ -453,11 +450,7 @@ export default function StudentCanvas({ activity }) {
                             <div className='popup ModalCompile4'>Undo</div>
                           )}
                         </button>
-                        <button
-                          onClick={handleJS}
-                        >Show Code
-                            
-                        </button>
+                      
                         <button
                           onClick={handleRedo}
                           id='link'
