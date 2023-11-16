@@ -1,6 +1,6 @@
 import { Modal, Button, Typography, Menu } from 'antd';
 import React, { useState } from 'react';
-import { getArduino, getXml } from '../../Utils/helpers';
+import { getArduino, getXml, getJS, getPython } from '../../Utils/helpers';
 
 export default function CodeModal(props) {
   const [visible, setVisible] = useState(false);
@@ -48,7 +48,7 @@ export default function CodeModal(props) {
             <Text copyable style={{ whiteSpace: 'pre-wrap' }}>
               {title === 'XML'
                 ? getXml(workspaceRef, false)
-                : getArduino(workspaceRef, false)}
+                : getPython(workspaceRef, false)}
             </Text>
           </div>
         ) : null}

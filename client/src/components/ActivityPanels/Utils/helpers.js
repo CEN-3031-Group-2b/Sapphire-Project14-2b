@@ -34,7 +34,13 @@ export const getXml = (workspaceRef, shouldAlert = true) => {
 export const getJS = (workspaceRef) => {
   window.Blockly.JavaScript.INFINITE_LOOP_TRAP = null;
   let code = window.Blockly.JavaScript.workspaceToCode(workspaceRef);
-  alert(code);
+  return code;
+};
+
+// Generates python code from blockly canvas
+export const getPython = (workspaceRef) => {
+  window.Blockly.Python.INFINITE_LOOP_TRAP = null;
+  let code = window.Blockly.Python.workspaceToCode(workspaceRef);
   return code;
 };
 
