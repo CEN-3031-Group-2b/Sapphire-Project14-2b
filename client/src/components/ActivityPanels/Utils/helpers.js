@@ -38,6 +38,13 @@ export const getJS = (workspaceRef, shouldAlert = true) => {
   return code;
 };
 
+// Generates python code from blockly canvas
+export const getPython = (workspaceRef) => {
+  window.Blockly.Python.INFINITE_LOOP_TRAP = null;
+  let code = window.Blockly.Python.workspaceToCode(workspaceRef);
+  return code;
+};
+
 // Generates Arduino code from blockly canvas
 export const getArduino = (workspaceRef, shouldAlert = true) => {
   window.Blockly.Arduino.INFINITE_LOOP_TRAP = null;

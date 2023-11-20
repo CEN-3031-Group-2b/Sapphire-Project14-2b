@@ -1,6 +1,6 @@
 import { Modal, Button, Typography, Menu,message } from 'antd';
 import React, { useState } from 'react';
-import { getArduino, getXml, getJS } from '../../Utils/helpers';
+import { getArduino, getXml, getJS, getPython } from '../../Utils/helpers';
 
 export default function CodeModal(props) {
   const [visible, setVisible] = useState(false);
@@ -18,6 +18,7 @@ export default function CodeModal(props) {
   const handleOk = () => {
     setVisible(false);
   };
+  
   try {
     return (
       <div id='code-modal'>
