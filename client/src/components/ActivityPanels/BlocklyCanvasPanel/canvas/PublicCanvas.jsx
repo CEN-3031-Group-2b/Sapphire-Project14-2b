@@ -27,6 +27,7 @@ export default function PublicCanvas({ activity, isSandbox }) {
   const [connectionOpen, setConnectionOpen] = useState(false);
   const [selectedCompile, setSelectedCompile] = useState(false);
   const [compileError, setCompileError] = useState('');
+  const [languageChoicePublic, setLanguageChoice] = useState("arduino");
 
   const [forceUpdate] = useReducer((x) => x + 1, 0);
   const workspaceRef = useRef(null);
@@ -53,6 +54,7 @@ export default function PublicCanvas({ activity, isSandbox }) {
     if (workspaceRef.current.undoStack_.length > 0)
       workspaceRef.current.undo(false);
   };
+  
 
   const handleRedo = () => {
     if (workspaceRef.current.redoStack_.length > 0)
@@ -116,6 +118,12 @@ export default function PublicCanvas({ activity, isSandbox }) {
       setShowPlotter(false);
     }
   };
+  const handleLanguageChange = async (event) => {
+
+    setLanguageChoice(event.target.value);
+    
+ 
+  };
 
   const handleCompile = async () => {
     if (showConsole || showPlotter) {
@@ -149,7 +157,7 @@ export default function PublicCanvas({ activity, isSandbox }) {
       </Menu.Item>
       <CodeModal title={'XML'} workspaceRef={workspaceRef.current} />
       <Menu.Item>
-        <CodeModal title={'Arduino Code'} workspaceRef={workspaceRef.current} />
+        <CodeModal title={languageChoicePublic} workspaceRef={workspaceRef.current} />
       </Menu.Item>
     </Menu>
   );
@@ -187,6 +195,13 @@ export default function PublicCanvas({ activity, isSandbox }) {
                   <Col flex={'200px'}>
                     <Row>
                       <Col className='flex flex-row'>
+                      <label>
+                          Choose Language 
+                          <select language = {languageChoicePublic} onChange={(e) =>handleLanguageChange(e)}>
+                            <option language = "arduino">Arduino</option>
+                            <option language = "js">Javascript</option>
+                          </select>
+                        </label>
                         <button
                           onClick={handleUndo}
                           id='link'
@@ -209,6 +224,8 @@ export default function PublicCanvas({ activity, isSandbox }) {
                             <div className='popup ModalCompile4'>Undo</div>
                           )}
                         </button>
+                        
+                        
                         <button
                           onClick={handleRedo}
                           id='link'

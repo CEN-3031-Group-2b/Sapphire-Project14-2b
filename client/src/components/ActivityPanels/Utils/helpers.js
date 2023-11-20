@@ -31,9 +31,10 @@ export const getXml = (workspaceRef, shouldAlert = true) => {
 };
 
 // Generates javascript code from blockly canvas
-export const getJS = (workspaceRef) => {
+export const getJS = (workspaceRef, shouldAlert = true) => {
   window.Blockly.JavaScript.INFINITE_LOOP_TRAP = null;
   let code = window.Blockly.JavaScript.workspaceToCode(workspaceRef);
+  if (shouldAlert) alert(code);
   return code;
 };
 
@@ -48,6 +49,8 @@ export const getPython = (workspaceRef) => {
 export const getArduino = (workspaceRef, shouldAlert = true) => {
   window.Blockly.Arduino.INFINITE_LOOP_TRAP = null;
   let code = window.Blockly.Arduino.workspaceToCode(workspaceRef);
+  //code = getJS(workspaceRef);
+  //console.log("test");
   if (shouldAlert) alert(code);
   return code;
 };
@@ -67,9 +70,9 @@ export const compileArduinoCode = async (
   isStudent
 ) => {
   setSelectedCompile(true);
-  const sketch = getArduino(workspaceRef, false);
-  let workspaceDom = window.Blockly.Xml.workspaceToDom(workspaceRef);
-  let workspaceText = window.Blockly.Xml.domToText(workspaceDom);
+  const sketch = getArduino(workspaceRef,false);
+  let workspaceDom = window.Blockly.xml.workspaceToDom(workspaceRef);
+  let workspaceText = window.Blockly.xml.domToText(workspaceDom);
   let path;
   isStudent ? (path = '/submissions') : (path = '/sandbox/submission');
   let id = isStudent ? activity.id : undefined;
@@ -105,7 +108,7 @@ export const compileArduinoCode = async (
       ),
     250
   );
-
+    
   // Set a timeout of 20 second. If the submission status fail to update to
   // COMPLETE, show error.
   setTimeout(() => {

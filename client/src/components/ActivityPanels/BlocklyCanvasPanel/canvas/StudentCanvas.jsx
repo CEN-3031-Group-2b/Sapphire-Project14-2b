@@ -1,6 +1,6 @@
 import React, { useEffect, useRef, useState, useReducer } from 'react';
 import '../../ActivityLevels.less';
-import { compileArduinoCode, handleSave } from '../../Utils/helpers';
+import { compileArduinoCode, handleSave,getJS } from '../../Utils/helpers';
 import { message, Spin, Row, Col, Alert, Dropdown, Menu } from 'antd';
 import { getSaves } from '../../../../Utils/requests';
 import CodeModal from '../modals/CodeModal';
@@ -13,6 +13,7 @@ import {
   handleCloseConnection,
   handleOpenConnection,
 } from '../../Utils/consoleHelpers';
+//import MentorActivityDetailModal, {languageChoice} from '../../../../views/Mentor/Classroom/Home/MentorActivityDetailModal';
 import ArduinoLogo from '../Icons/ArduinoLogo';
 import PlotterLogo from '../Icons/PlotterLogo';
 import { useNavigate } from 'react-router-dom';
@@ -35,6 +36,7 @@ export default function StudentCanvas({ activity }) {
   const [saves, setSaves] = useState({});
   const [lastSavedTime, setLastSavedTime] = useState(null);
   const [lastAutoSave, setLastAutoSave] = useState(null);
+  const [languageChoice, setLanguageChoice] = useState("arduino");
 
   const [forceUpdate] = useReducer((x) => x + 1, 0);
   const navigate = useNavigate();
@@ -231,6 +233,7 @@ export default function StudentCanvas({ activity }) {
       pushEvent('undo');
     }
   };
+ 
 
   const handleRedo = () => {
     if (workspaceRef.current.redoStack_.length > 0) {
@@ -322,6 +325,12 @@ export default function StudentCanvas({ activity }) {
       pushEvent('compile');
     }
   };
+  const handleLanguageChange = async (event) => {
+
+    setLanguageChoice(event.target.value);
+    
+ 
+  };
 
   const handleGoBack = () => {
     if (
@@ -344,7 +353,7 @@ export default function StudentCanvas({ activity }) {
         &nbsp; Show Serial Plotter
       </Menu.Item>
       <Menu.Item>
-        <CodeModal title={'Arduino Code'} workspaceRef={workspaceRef.current} />
+        <CodeModal title={languageChoice} workspaceRef={workspaceRef.current} />
       </Menu.Item>
     </Menu>
   );
@@ -411,6 +420,14 @@ export default function StudentCanvas({ activity }) {
                       </Col>
 
                       <Col className='flex flex-row' id='icon-align'>
+                        <label>
+                          Choose Language for Activity
+                          <select language = {languageChoice} onChange={(e) =>handleLanguageChange(e)}>
+                            <option language = "arduino">Arduino</option>
+                            <option language = "js">Javascript</option>
+                          </select>
+                        </label>
+                        
                         <button
                           onClick={handleUndo}
                           id='link'
@@ -433,6 +450,7 @@ export default function StudentCanvas({ activity }) {
                             <div className='popup ModalCompile4'>Undo</div>
                           )}
                         </button>
+                      
                         <button
                           onClick={handleRedo}
                           id='link'
