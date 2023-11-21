@@ -1,9 +1,11 @@
 import React, { useEffect, useRef, useState, useReducer } from 'react';
 import '../../ActivityLevels.less';
 import { compileArduinoCode, handleSave,getJS } from '../../Utils/helpers';
-import { message, Spin, Row, Col, Alert, Dropdown, Menu } from 'antd';
+import { message, Spin, Row, Col, Alert, Dropdown, Menu, Space, Typography } from 'antd';
+import { DownOutlined } from '@ant-design/icons';
 import { getSaves } from '../../../../Utils/requests';
 import CodeModal from '../modals/CodeModal';
+import RunModal from '../modals/RunModal';
 import ConsoleModal from '../modals/ConsoleModal';
 import PlotterModal from '../modals/PlotterModal';
 import DisplayDiagramModal from '../modals/DisplayDiagramModal'
@@ -18,12 +20,14 @@ import ArduinoLogo from '../Icons/ArduinoLogo';
 import PlotterLogo from '../Icons/PlotterLogo';
 import { useNavigate } from 'react-router-dom';
 
+
 let plotId = 1;
 
 export default function StudentCanvas({ activity }) {
   const [hoverSave, setHoverSave] = useState(false);
   const [hoverUndo, setHoverUndo] = useState(false);
   const [hoverRedo, setHoverRedo] = useState(false);
+  const [hoverPlay, setHoverPlay] = useState(false);
   const [hoverCompile, setHoverCompile] = useState(false);
   const [hoverImage, setHoverImage] = useState(false);
   const [hoverConsole, setHoverConsole] = useState(false);
@@ -45,6 +49,21 @@ export default function StudentCanvas({ activity }) {
 
   const replayRef = useRef([]);
   const clicks = useRef(0);
+
+  const items = [
+    {
+      key: '0',
+      label: "Arduino",
+    },
+    {
+      key: '1',
+      label: "Javascript",
+    },
+    {
+      key: '2',
+      label: "Python",
+    },
+  ];
 
   const setWorkspace = () => {
     workspaceRef.current = window.Blockly.inject('blockly-canvas', {
@@ -240,6 +259,7 @@ export default function StudentCanvas({ activity }) {
       workspaceRef.current.undo(true);
       pushEvent('redo');
     }
+    //console.log(languageChoice);
   };
 
   const handleConsole = async () => {
@@ -331,6 +351,10 @@ export default function StudentCanvas({ activity }) {
     
  
   };
+  const handleRun = () => {
+    <RunModal title={languageChoice} workspaceRef={workspaceRef.current} />
+
+  };
 
   const handleGoBack = () => {
     if (
@@ -345,6 +369,11 @@ export default function StudentCanvas({ activity }) {
     let output = new Date(value).toLocaleDateString(locale);
     return output + ' ' + new Date(value).toLocaleTimeString(locale);
   };
+  const onClick =  ({ key }) => {
+    message.info("Activity Language Changed to " + items[key ].label);
+    
+    setLanguageChoice(items[key ].label)
+  };
 
   const menu = (
     <Menu>
@@ -357,6 +386,13 @@ export default function StudentCanvas({ activity }) {
       </Menu.Item>
     </Menu>
   );
+  const runButton = (
+    <Menu>
+      <Menu.Item>
+        <RunModal title={languageChoice} workspaceRef={workspaceRef.current} />
+      </Menu.Item>
+    </Menu>
+  )
 
   return (
     <div id='horizontal-container' className='flex flex-column'>
@@ -376,6 +412,7 @@ export default function StudentCanvas({ activity }) {
                 {activity.lesson_module_name}
               </Col>
               <Col flex='auto'>
+                
                 <Row align='middle' justify='end' id='description-container'>
                   <Col flex={'30px'}>
                     <button
@@ -388,11 +425,19 @@ export default function StudentCanvas({ activity }) {
                   </Col>
                   <Col flex='auto' />
 
+                  
+                  
+                  
+
+                  
+
                   <Col flex={'300px'}>
                     {lastSavedTime ? `Last changes saved ${lastSavedTime}` : ''}
                   </Col>
+                  
                   <Col flex={'350px'}>
                     <Row>
+                      
                       <Col className='flex flex-row' id='icon-align'>
                         <VersionHistoryModal
                           saves={saves}
@@ -418,15 +463,17 @@ export default function StudentCanvas({ activity }) {
                           )}
                         </button>
                       </Col>
+                      
+                      
+                      
+                      
 
                       <Col className='flex flex-row' id='icon-align'>
-                        <label>
-                          Choose Language for Activity
-                          <select language = {languageChoice} onChange={(e) =>handleLanguageChange(e)}>
-                            <option language = "arduino">Arduino</option>
-                            <option language = "js">Javascript</option>
-                          </select>
-                        </label>
+
+
+                        
+                        
+                        
                         
                         <button
                           onClick={handleUndo}
@@ -473,10 +520,52 @@ export default function StudentCanvas({ activity }) {
                             <div className='popup ModalCompile4'>Redo</div>
                           )}
                         </button>
+
+
+                        
+                       <Col flex={'100px'}>     
+                      <Dropdown overlay={runButton} placement="top">
+                        <i id='icon-btn' className='fa fa-play-circle'></i>
+                     </Dropdown>
+                     <Col flex={'300px'}>
+                      < Dropdown
+                        id='dropdown'
+                        menu={{
+                          items,
+                          selectable: true,
+                          defaultSelectedKeys: ['1'],
+                          onClick,
+                          
+                        }}
+                        placement="bottom"
+                      >
+                        
+                        <a onClick={(e) =>e.preventDefault()}>
+                          <Typography.Link >
+                            <Space>
+                              Language
+                              <DownOutlined />
+                            </Space>
+                          </Typography.Link>
+                        </a>
+                      </Dropdown>
                       </Col>
+                     </Col>
+                     
+
+                     
+                        
+
+                    
+                      </Col>
+                      
+                      
                     </Row>
+                    
                   </Col>
                   <Col flex={'180px'}>
+
+                  
                     <div
                       id='action-btn-container'
                       className='flex space-around'
