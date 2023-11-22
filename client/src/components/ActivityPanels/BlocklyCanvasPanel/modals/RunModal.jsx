@@ -24,7 +24,7 @@ export default function RunModal(props) {
 
         <Menu.Item id='show-run-icon' onClick={showModal}>
             <i className='fa fa-play' />
-            &nbsp;Run Code
+            &nbsp; Run Code
         </Menu.Item>
         
         <Modal

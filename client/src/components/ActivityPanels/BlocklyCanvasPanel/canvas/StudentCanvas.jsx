@@ -6,6 +6,7 @@ import { DownOutlined } from '@ant-design/icons';
 import { getSaves } from '../../../../Utils/requests';
 import CodeModal from '../modals/CodeModal';
 import RunModal from '../modals/RunModal';
+import HelpModal from '../modals/HelpModal';
 import ConsoleModal from '../modals/ConsoleModal';
 import PlotterModal from '../modals/PlotterModal';
 import DisplayDiagramModal from '../modals/DisplayDiagramModal'
@@ -392,7 +393,14 @@ export default function StudentCanvas({ activity }) {
         <RunModal title={languageChoice} workspaceRef={workspaceRef.current} />
       </Menu.Item>
     </Menu>
-  )
+  );  
+  const helpButton = (
+    <Menu>
+      <Menu.Item>
+        <HelpModal title={languageChoice} workspaceRef={workspaceRef.current} />
+      </Menu.Item>
+    </Menu>
+  );
 
   return (
     <div id='horizontal-container' className='flex flex-column'>
@@ -526,7 +534,10 @@ export default function StudentCanvas({ activity }) {
                        <Col flex={'100px'}>     
                       <Dropdown overlay={runButton} placement="top">
                         <i id='icon-btn' className='fa fa-play-circle'></i>
-                     </Dropdown>
+                      </Dropdown>
+                      <Dropdown overlay={helpButton} placement="top">
+                        <i id='help-btn'className='fa fa-question-circle'></i>
+                      </Dropdown>
                      <Col flex={'300px'}>
                       < Dropdown
                         id='dropdown'
