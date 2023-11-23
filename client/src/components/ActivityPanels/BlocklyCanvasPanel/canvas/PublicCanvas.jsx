@@ -2,10 +2,12 @@ import React, { useEffect, useRef, useState, useReducer } from 'react';
 import { Link } from 'react-router-dom';
 import '../../ActivityLevels.less';
 import { compileArduinoCode } from '../../Utils/helpers';
-import { message, Spin, Row, Col, Alert, Menu, Dropdown } from 'antd';
+import { message, Spin, Row, Col, Alert, Menu, Dropdown,  Space, Typography } from 'antd';
 import CodeModal from '../modals/CodeModal';
 import ConsoleModal from '../modals/ConsoleModal';
 import PlotterModal from '../modals/PlotterModal';
+import RunModal from '../modals/RunModal';
+import { DownOutlined } from '@ant-design/icons';
 import {
   connectToPort,
   handleCloseConnection,
@@ -32,6 +34,21 @@ export default function PublicCanvas({ activity, isSandbox }) {
   const [forceUpdate] = useReducer((x) => x + 1, 0);
   const workspaceRef = useRef(null);
   const activityRef = useRef(null);
+
+  const items = [
+    {
+      key: '0',
+      label: "Arduino",
+    },
+    {
+      key: '1',
+      label: "Javascript",
+    },
+    {
+      key: '2',
+      label: "Python",
+    },
+  ];
 
   const setWorkspace = () => {
     workspaceRef.current = window.Blockly.inject('blockly-canvas', {
@@ -149,6 +166,19 @@ export default function PublicCanvas({ activity, isSandbox }) {
     }
   };
 
+  const onClick =  ({ key }) => {
+    message.info("Activity Language Changed to " + items[key ].label);
+    
+    setLanguageChoice(items[key ].label)
+
+    if(items[key].label === "Javascript" | items[key].label === "Python") {
+      document.getElementById('action-btn-container').style.visibility = 'hidden';
+    }
+    else{
+      document.getElementById('action-btn-container').style.visibility = 'visible';
+    }
+  };
+
   const menu = (
     <Menu>
       <Menu.Item onClick={handlePlotter}>
@@ -161,6 +191,14 @@ export default function PublicCanvas({ activity, isSandbox }) {
       </Menu.Item>
     </Menu>
   );
+
+  // const runButton = (
+  //   <Menu>
+  //     <Menu.Item>
+  //       <RunModal title={languageChoice} workspaceRef={workspaceRef.current} />
+  //     </Menu.Item>
+  //   </Menu>
+  // )
 
   return (
     <div id='horizontal-container' className='flex flex-column'>
@@ -177,7 +215,7 @@ export default function PublicCanvas({ activity, isSandbox }) {
           >
             <Row id='icon-control-panel'>
               <Col flex='none' id='section-header'>
-                Program your Arduino...
+                Place your Blocks...
               </Col>
               <Col flex='auto'>
                 <Row align='middle' justify='end' id='description-container'>
@@ -195,13 +233,27 @@ export default function PublicCanvas({ activity, isSandbox }) {
                   <Col flex={'200px'}>
                     <Row>
                       <Col className='flex flex-row'>
-                      <label>
-                          Choose Language 
-                          <select language = {languageChoicePublic} onChange={(e) =>handleLanguageChange(e)}>
-                            <option language = "arduino">Arduino</option>
-                            <option language = "js">Javascript</option>
-                          </select>
-                        </label>
+                      < Dropdown
+                        id='dropdown'
+                        menu={{
+                          items,
+                          selectable: true,
+                          defaultSelectedKeys: ['0'],
+                          onClick,
+                          
+                        }}
+                        placement="bottom"
+                      >
+                        
+                        <a onClick={(e) =>e.preventDefault()}>
+                          <Typography.Link >
+                            <Space>
+                              Language
+                              <DownOutlined />
+                            </Space>
+                          </Typography.Link>
+                        </a>
+                      </Dropdown>
                         <button
                           onClick={handleUndo}
                           id='link'
@@ -278,11 +330,20 @@ export default function PublicCanvas({ activity, isSandbox }) {
                           Show Serial Monitor
                         </div>
                       )}
+                    </div>
+                    
+                    
+                  </Col>
+                  <Col flex= {'10px'}>
+                    <div
+                      id='action-btn-container'
+                      className='flex space-around'
+                    >
                       <Dropdown overlay={menu}>
                         <i className='fas fa-ellipsis-v'></i>
                       </Dropdown>
-                    </div>
-                  </Col>
+                      </div>
+                   </Col>
                 </Row>
               </Col>
             </Row>

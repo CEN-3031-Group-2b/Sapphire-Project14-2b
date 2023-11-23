@@ -374,6 +374,13 @@ export default function StudentCanvas({ activity }) {
     message.info("Activity Language Changed to " + items[key ].label);
     
     setLanguageChoice(items[key ].label)
+
+    if(items[key].label === "Javascript" | items[key].label === "Python") {
+      document.getElementById('action-btn-container').style.visibility = 'hidden';
+    }
+    else{
+      document.getElementById('action-btn-container').style.visibility = 'visible';
+    }
   };
 
   const menu = (
@@ -544,7 +551,7 @@ export default function StudentCanvas({ activity }) {
                         menu={{
                           items,
                           selectable: true,
-                          defaultSelectedKeys: ['1'],
+                          defaultSelectedKeys: ['0'],
                           onClick,
                           
                         }}
@@ -590,6 +597,7 @@ export default function StudentCanvas({ activity }) {
                           Upload to Arduino
                         </div>
                       )}
+                    
                     <DisplayDiagramModal
                       image={activity.images}
                     />

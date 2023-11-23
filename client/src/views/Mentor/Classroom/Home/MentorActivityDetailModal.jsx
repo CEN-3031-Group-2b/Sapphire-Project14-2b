@@ -1,4 +1,5 @@
-import { Button, Form, Input, message, Modal } from "antd"
+import { Button, Form, Input, message, Modal,  Spin, Row, Col, Alert, Dropdown, Menu, Space, Typography  } from "antd"
+import { DownOutlined } from '@ant-design/icons'
 import React, { useEffect, useState } from "react"
 import { useNavigate } from "react-router-dom"
 import {
@@ -38,6 +39,26 @@ const MentorActivityDetailModal = ({
   const [submitButton, setSubmitButton] = useState(0)
   const [languageChoice, setLanguageChoice] = useState("arduino")
   const navigate = useNavigate()
+
+  const items = [
+    {
+      key: '0',
+      label: "Arduino",
+    },
+    {
+      key: '1',
+      label: "Javascript",
+    },
+    {
+      key: '2',
+      label: "Python",
+    },
+  ];
+  const onClick =  ({ key }) => {
+    message.info("Activity Language Changed to " + items[key ].label);
+    
+    setLanguageChoice(items[key ].label)
+  };
 
   useEffect(() => {
     const showActivityDetailsModal = async () => {
@@ -280,13 +301,27 @@ const MentorActivityDetailModal = ({
             span: 30,
           }}
         >
-          <label>
-            Choose Language for Activity
-            <select language = {languageChoice} onChange={(e) =>handleLanguageChange(e)}>
-              <option language = "arduino">Arduino</option>
-              <option language = "js">Javascript</option>
-            </select>
-          </label>
+          < Dropdown
+                        id='dropdown'
+                        menu={{
+                          items,
+                          selectable: true,
+                          defaultSelectedKeys: ['0'],
+                          onClick,
+                          
+                        }}
+                        placement="bottom"
+                      >
+                        
+                        <a onClick={(e) =>e.preventDefault()}>
+                          <Typography.Link >
+                            <Space>
+                              Language
+                              <DownOutlined />
+                            </Space>
+                          </Typography.Link>
+                        </a>
+                      </Dropdown>
           
          
           <button id="save--set-activity-btn" onClick={() => setSubmitButton(1)}>

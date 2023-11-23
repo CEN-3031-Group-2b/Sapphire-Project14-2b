@@ -44,7 +44,7 @@ export default function RunModal(props) {
               <Text copyable style={{ whiteSpace: 'pre-wrap' }}>
                 {title === 'XML'
                   ? getXml(workspaceRef, false)
-                  :( title === 'Javascript' ?eval(getJS(workspaceRef, false)):getArduino(workspaceRef,false))}
+                  :( title === 'Javascript' ?getJS(workspaceRef, false):getArduino(workspaceRef,false))}
               </Text>
             </div>
           ) : null}
