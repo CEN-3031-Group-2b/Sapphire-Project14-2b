@@ -1,6 +1,6 @@
 import React, { useEffect, useRef, useState, useReducer } from 'react';
 import '../../ActivityLevels.less';
-import { compileArduinoCode, handleSave,getJS } from '../../Utils/helpers';
+import {compileArduinoCode, handleSave, generateToolbox, getIncompatibleBlocks} from '../../Utils/helpers';
 import { message, Spin, Row, Col, Alert, Dropdown, Menu, Space, Typography } from 'antd';
 import { DownOutlined } from '@ant-design/icons';
 import { getSaves } from '../../../../Utils/requests';
@@ -370,17 +370,14 @@ export default function StudentCanvas({ activity }) {
     let output = new Date(value).toLocaleDateString(locale);
     return output + ' ' + new Date(value).toLocaleTimeString(locale);
   };
-  const onClick =  ({ key }) => {
-    message.info("Activity Language Changed to " + items[key ].label);
-    
-    setLanguageChoice(items[key ].label)
+  const onClick = ({key}) => {
+    const newLanguage = items[key].label;
+    message.info(`Activity Language Changed to ${newLanguage}`);
 
-    if(items[key].label === "Javascript" | items[key].label === "Python") {
-      document.getElementById('action-btn-container').style.visibility = 'hidden';
-    }
-    else{
-      document.getElementById('action-btn-container').style.visibility = 'visible';
-    }
+    setLanguageChoice(newLanguage);
+    document.getElementById('action-btn-container').style.visibility = (newLanguage === 'Arduino' ? 'visible' : 'hidden');
+    workspaceRef.current.updateToolbox(generateToolbox(activity, newLanguage, true));
+    getIncompatibleBlocks(newLanguage, workspaceRef.current.getAllBlocks()).forEach((block) => block.dispose());
   };
 
   const menu = (
