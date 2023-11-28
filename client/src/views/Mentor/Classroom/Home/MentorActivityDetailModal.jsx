@@ -47,7 +47,7 @@ const MentorActivityDetailModal = ({
     },
     {
       key: '1',
-      label: "Javascript",
+      label: "JavaScript",
     },
     {
       key: '2',
