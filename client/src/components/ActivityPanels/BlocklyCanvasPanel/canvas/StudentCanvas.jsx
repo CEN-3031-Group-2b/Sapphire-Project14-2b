@@ -41,7 +41,7 @@ export default function StudentCanvas({ activity }) {
   const [saves, setSaves] = useState({});
   const [lastSavedTime, setLastSavedTime] = useState(null);
   const [lastAutoSave, setLastAutoSave] = useState(null);
-  const [languageChoice, setLanguageChoice] = useState("arduino");
+  const [languageChoice, setLanguageChoice] = useState("Arduino");
 
   const [forceUpdate] = useReducer((x) => x + 1, 0);
   const navigate = useNavigate();

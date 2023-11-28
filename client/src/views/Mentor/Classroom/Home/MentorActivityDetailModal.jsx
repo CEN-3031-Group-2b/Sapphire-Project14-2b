@@ -37,7 +37,7 @@ const MentorActivityDetailModal = ({
   const [activityDetailsVisible, setActivityDetailsVisible] = useState(false)
   const [linkError, setLinkError] = useState(false)
   const [submitButton, setSubmitButton] = useState(0)
-  const [languageChoice, setLanguageChoice] = useState("arduino")
+  const [languageChoice, setLanguageChoice] = useState("Arduino")
   const navigate = useNavigate()
 
   const items = [

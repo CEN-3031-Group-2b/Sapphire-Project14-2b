@@ -1,23 +1,45 @@
-import { Modal, Button, Typography, Menu,message } from 'antd';
+import { Modal, Button, Menu,message } from 'antd';
 import React, { useState } from 'react';
-import { getArduino, getXml, getJS } from '../../Utils/helpers';
+import Interpreter from 'js-interpreter';
+import { getJS } from '../../Utils/helpers';
 
 export default function RunModal(props) {
   const [visible, setVisible] = useState(false);
   const { title, workspaceRef } = props;
-  const { Text } = Typography;
+  const [output, setOutput] = useState([]);
+
 
   const showModal = () => {
     setVisible(true);
+    const code = getJS(workspaceRef, false);
+    console.log(code);
+    const interp = new Interpreter(code, initApi);
+    interp.run();
   };
 
   const handleCancel = () => {
     setVisible(false);
+    setOutput([]);
   };
 
   const handleOk = () => {
     setVisible(false);
+    setOutput([]);
   };
+
+  function initApi(interpreter, globalObject) 
+  {
+    // Add an API function for the alert() block, generated for "text_print" blocks.
+    const wrapperAlert = function alert(text) 
+    {
+      text = arguments.length ? text : '';
+      setOutput([...output, text]);
+    };
+
+    interpreter.setProperty(globalObject, 'alert',
+    interpreter.createNativeFunction(wrapperAlert));
+  }
+
   try {
     return (
       <div id='run-modal'>
@@ -39,15 +61,9 @@ export default function RunModal(props) {
           ]}
         >
           
-          {workspaceRef ? (
-            <div id='code-text-box'>
-              <Text copyable style={{ whiteSpace: 'pre-wrap' }}>
-                {title === 'XML'
-                  ? getXml(workspaceRef, false)
-                  :( title === 'Javascript' ?getJS(workspaceRef, false):getArduino(workspaceRef,false))}
-              </Text>
-            </div>
-          ) : null}
+          <div id='code-text-box'>
+            {output.length > 0 ? output.join('\n'): <i>No output.</i>}
+          </div>
         </Modal>
       </div>
     );

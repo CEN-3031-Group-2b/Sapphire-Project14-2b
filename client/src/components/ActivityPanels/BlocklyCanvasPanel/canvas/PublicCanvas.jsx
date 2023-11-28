@@ -6,7 +6,6 @@ import { message, Spin, Row, Col, Alert, Menu, Dropdown,  Space, Typography } fr
 import CodeModal from '../modals/CodeModal';
 import ConsoleModal from '../modals/ConsoleModal';
 import PlotterModal from '../modals/PlotterModal';
-import RunModal from '../modals/RunModal';
 import { DownOutlined } from '@ant-design/icons';
 import {
   connectToPort,
@@ -29,7 +28,7 @@ export default function PublicCanvas({ activity, isSandbox }) {
   const [connectionOpen, setConnectionOpen] = useState(false);
   const [selectedCompile, setSelectedCompile] = useState(false);
   const [compileError, setCompileError] = useState('');
-  const [languageChoicePublic, setLanguageChoice] = useState("arduino");
+  const [languageChoicePublic, setLanguageChoice] = useState("Arduino");
 
   const [forceUpdate] = useReducer((x) => x + 1, 0);
   const workspaceRef = useRef(null);
