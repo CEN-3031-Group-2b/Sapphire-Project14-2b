@@ -6,6 +6,8 @@ import {message, Spin, Row, Col, Alert, Menu, Dropdown, Space, Typography} from 
 import CodeModal from '../modals/CodeModal';
 import ConsoleModal from '../modals/ConsoleModal';
 import PlotterModal from '../modals/PlotterModal';
+import RunModal from '../modals/RunModal';
+import HelpModal from '../modals/HelpModal';
 import {DownOutlined} from '@ant-design/icons';
 import {
     connectToPort,
@@ -170,6 +172,8 @@ export default function PublicCanvas({activity, isSandbox}) {
         getIncompatibleBlocks(newLanguage, workspaceRef.current.getAllBlocks()).forEach((block) => block.dispose());
     };
 
+    
+
     const menu = (
         <Menu>
             <Menu.Item onClick={handlePlotter}>
@@ -182,14 +186,21 @@ export default function PublicCanvas({activity, isSandbox}) {
             </Menu.Item>
         </Menu>
     );
+    const runButton = (
+        <Menu>
+            <Menu.Item>
+                <RunModal title={languageChoicePublic} workspaceRef={workspaceRef.current}/>
+            </Menu.Item>
+        </Menu>
+    );
+    const helpButton = (
+        <Menu>
+            <Menu.Item>
+                <HelpModal title={languageChoicePublic} workspaceRef={workspaceRef.current}/>
+            </Menu.Item>
+        </Menu>
+    );
 
-    // const runButton = (
-    //   <Menu>
-    //     <Menu.Item>
-    //       <RunModal title={languageChoice} workspaceRef={workspaceRef.current} />
-    //     </Menu.Item>
-    //   </Menu>
-    // )
 
     return (
         <div id='horizontal-container' className='flex flex-column'>
@@ -221,7 +232,7 @@ export default function PublicCanvas({activity, isSandbox}) {
                                     </Col>
                                     <Col flex='auto'/>
 
-                                    <Col flex={'200px'}>
+                                    <Col flex={'400px'}>
                                         <Row>
                                             <Col className='flex flex-row'>
                                                 <Dropdown
@@ -291,6 +302,12 @@ export default function PublicCanvas({activity, isSandbox}) {
                                                         <div className='popup ModalCompile4'>Redo</div>
                                                     )}
                                                 </button>
+                                                <Dropdown overlay={runButton} placement="top">
+                                                <i id='icon-btn' className='fa fa-play-circle'></i>
+                                            </Dropdown>
+                                            <Dropdown overlay={helpButton} placement="top">
+                                                <i id='help-btn' className='fa fa-question-circle'></i>
+                                            </Dropdown>
                                             </Col>
                                         </Row>
                                     </Col>
