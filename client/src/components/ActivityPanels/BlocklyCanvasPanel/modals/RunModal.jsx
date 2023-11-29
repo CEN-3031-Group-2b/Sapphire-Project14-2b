@@ -8,16 +8,17 @@ export default function RunModal(props) {
   const { title, workspaceRef } = props;
   const [output, setOutput] = useState([]);
   let tempOutput = [];
-
+  let loopTooLong = false;
 
   const showModal = () => {
+    loopTooLong = false;
     setVisible(true);
     const code = getJS(workspaceRef, false);
     var interp = new Interpreter(code, initApi);
-    for (let i = 0; i < 10000; i++) {
+    for (let i = 0; i < 1000; i++) {
       if (!interp.step()) break;
     }
-    // if (interp.step()) alert('Loop timed out');
+    if (interp.step()) loopTooLong = true;
     setOutput(tempOutput);
     tempOutput = [];
   };
@@ -65,7 +66,7 @@ export default function RunModal(props) {
             </Button>,
           ]}
         >
-          
+          {loopTooLong && <b>Loop too long!</b>}
           <div id="code-text-box">
             {output.length > 0 ? output.map(t => <div>{t}</div>) : <i>No output.</i>}
           </div>
