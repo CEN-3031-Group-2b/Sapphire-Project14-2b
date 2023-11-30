@@ -177,8 +177,6 @@ export default function PublicCanvas({activity, isSandbox}) {
         }
     };
 
-    
-
     const menu = (
         <Menu>
             <Menu.Item onClick={handlePlotter}>

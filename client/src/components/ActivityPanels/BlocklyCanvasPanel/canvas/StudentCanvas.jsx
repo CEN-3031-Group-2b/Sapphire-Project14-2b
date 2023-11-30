@@ -41,7 +41,7 @@ export default function StudentCanvas({activity}) {
     const [saves, setSaves] = useState({});
     const [lastSavedTime, setLastSavedTime] = useState(null);
     const [lastAutoSave, setLastAutoSave] = useState(null);
-    const [languageChoice, setLanguageChoice] = useState("arduino");
+    const [languageChoice, setLanguageChoice] = useState("Arduino");
 
     const [forceUpdate] = useReducer((x) => x + 1, 0);
     const navigate = useNavigate();
@@ -372,14 +372,20 @@ export default function StudentCanvas({activity}) {
         let output = new Date(value).toLocaleDateString(locale);
         return output + ' ' + new Date(value).toLocaleTimeString(locale);
     };
+
     const onClick = ({key}) => {
         const newLanguage = items[key].label;
-        message.info(`Activity Language Changed to ${newLanguage}`);
 
-        setLanguageChoice(newLanguage);
-        setGarbo(newLanguage === 'Arduino');
-        workspaceRef.current.updateToolbox(generateToolbox(activity, newLanguage, true));
-        getIncompatibleBlocks(newLanguage, workspaceRef.current.getAllBlocks()).forEach((block) => block.dispose());
+        if (newLanguage !== languageChoice) { // Are we changing language?
+            const badBlocks = getIncompatibleBlocks(newLanguage, workspaceRef.current.getAllBlocks());
+            if (badBlocks.length === 0 || confirm("There are incompatible blocks that will be removed. Do you wish to continue?")) { // Either have no bad blocks, or have permission to delete them
+                message.info(`Activity Language Changed to ${newLanguage}`);
+                setLanguageChoice(newLanguage);
+                setGarbo(newLanguage === 'Arduino');
+                workspaceRef.current.updateToolbox(generateToolbox(activity, newLanguage, true));
+                badBlocks.forEach((block) => block.dispose());
+            }
+        }
     };
 
     const menu = (
@@ -527,18 +533,14 @@ export default function StudentCanvas({activity}) {
                                                 id='dropdown'
                                                 menu={{
                                                     items,
-                                                    selectable: true,
-                                                    defaultSelectedKeys: ['0'],
                                                     onClick,
-
                                                 }}
                                                 placement="bottom"
                                             >
-
                                                 <a onClick={(e) => e.preventDefault()}>
                                                     <Typography.Link>
                                                         <Space>
-                                                            Language
+                                                            {languageChoice}
                                                             <DownOutlined/>
                                                         </Space>
                                                     </Typography.Link>
