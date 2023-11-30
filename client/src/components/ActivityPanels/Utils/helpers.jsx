@@ -36,7 +36,7 @@ export const getXml = (workspaceRef, shouldAlert = true) => {
 export const getJS = (workspaceRef, shouldAlert = true) => {
     window.Blockly.JavaScript.INFINITE_LOOP_TRAP = null;
     let code = window.Blockly.JavaScript.workspaceToCode(workspaceRef);
-    console.log(window.Blockly.JavaScript.blockToCode);
+    // console.log(window.Blockly.JavaScript.blockToCode);
     if (shouldAlert) alert(code);
     return code;
 };
@@ -52,8 +52,6 @@ export const getPython = (workspaceRef) => {
 export const getArduino = (workspaceRef, shouldAlert = true) => {
     window.Blockly.Arduino.INFINITE_LOOP_TRAP = null;
     let code = window.Blockly.Arduino.workspaceToCode(workspaceRef);
-    //code = getJS(workspaceRef);
-    //console.log("test");
     if (shouldAlert) alert(code);
     return code;
 };

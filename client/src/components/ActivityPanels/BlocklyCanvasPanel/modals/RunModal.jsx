@@ -7,14 +7,20 @@ export default function RunModal(props) {
   const [visible, setVisible] = useState(false);
   const { title, workspaceRef } = props;
   const [output, setOutput] = useState([]);
-
+  let tempOutput = [];
+  let loopTooLong = false;
 
   const showModal = () => {
+    loopTooLong = false;
     setVisible(true);
     const code = getJS(workspaceRef, false);
-    console.log(code);
-    const interp = new Interpreter(code, initApi);
-    interp.run();
+    var interp = new Interpreter(code, initApi);
+    for (let i = 0; i < 1000; i++) {
+      if (!interp.step()) break;
+    }
+    if (interp.step()) loopTooLong = true;
+    setOutput(tempOutput);
+    tempOutput = [];
   };
 
   const handleCancel = () => {
@@ -33,7 +39,7 @@ export default function RunModal(props) {
     const wrapperAlert = function alert(text) 
     {
       text = arguments.length ? text : '';
-      setOutput([...output, text]);
+      tempOutput = [...tempOutput, text];
     };
 
     interpreter.setProperty(globalObject, 'alert',
@@ -60,9 +66,9 @@ export default function RunModal(props) {
             </Button>,
           ]}
         >
-          
-          <div id='code-text-box'>
-            {output.length > 0 ? output.join('\n'): <i>No output.</i>}
+          {loopTooLong && <b>Loop too long!</b>}
+          <div id="code-text-box">
+            {output.length > 0 ? output.map(t => <div>{t}</div>) : <i>No output.</i>}
           </div>
         </Modal>
       </div>
