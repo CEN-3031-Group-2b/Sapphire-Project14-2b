@@ -376,30 +376,6 @@ export default function PublicCanvas({activity, isSandbox}) {
 
             {/* This xml is for the blocks' menu we will provide. Here are examples on how to include categories and subcategories */}
             {generateToolbox(activity, languageChoicePublic)}
-            {/*<xml id='toolbox' is='Blockly workspace'>*/}
-            {/*    {*/}
-            {/*        // Maps out block categories*/}
-            {/*        activity &&*/}
-            {/*        activity.toolbox &&*/}
-            {/*        activity.toolbox.map(([category, blocks]) => (*/}
-            {/*            <category name={category} is='Blockly category' key={category}>*/}
-            {/*                {*/}
-            {/*                    // maps out blocks in category*/}
-            {/*                    // eslint-disable-next-line*/}
-            {/*                    blocks.map((block) => {*/}
-            {/*                        return (*/}
-            {/*                            <block*/}
-            {/*                                type={block.name}*/}
-            {/*                                is='Blockly block'*/}
-            {/*                                key={block.name}*/}
-            {/*                            />*/}
-            {/*                        );*/}
-            {/*                    })*/}
-            {/*                }*/}
-            {/*            </category>*/}
-            {/*        ))*/}
-            {/*    }*/}
-            {/*</xml>*/}
 
             {compileError && (
                 <Alert
