@@ -33,6 +33,7 @@ export default function HelpModal(props) {
         title="Help Page"
         visible={visible}
         onOk={handleOk}
+        onCancel={handleCancel}
         width='50vw'
         footer={[
           <Button key='ok' type='primary' onClick={handleOk}>

@@ -164,15 +164,18 @@ export default function PublicCanvas({activity, isSandbox}) {
     // Change language
     const onClick = ({key}) => {
         const newLanguage = items[key].label;
-        message.info(`Activity Language Changed to ${newLanguage}`);
 
-        setLanguageChoice(newLanguage);
-        document.getElementById('action-btn-container').style.visibility = (newLanguage === 'Arduino' ? 'visible' : 'hidden');
-        workspaceRef.current.updateToolbox(generateToolbox(activity, newLanguage, true));
-        getIncompatibleBlocks(newLanguage, workspaceRef.current.getAllBlocks()).forEach((block) => block.dispose());
+        if (newLanguage !== languageChoicePublic) { // Are we changing language?
+            const badBlocks = getIncompatibleBlocks(newLanguage, workspaceRef.current.getAllBlocks());
+            if (badBlocks.length === 0 || confirm("There are incompatible blocks that will be removed. Do you wish to continue?")) { // Either have no bad blocks, or have permission to delete them
+                message.info(`Activity Language Changed to ${newLanguage}`);
+                setLanguageChoice(newLanguage);
+                document.getElementById('action-btn-container').style.visibility = (newLanguage === 'Arduino' ? 'visible' : 'hidden');
+                workspaceRef.current.updateToolbox(generateToolbox(activity, newLanguage, true));
+                badBlocks.forEach((block) => block.dispose());
+            }
+        }
     };
-
-    
 
     const menu = (
         <Menu>
@@ -239,18 +242,14 @@ export default function PublicCanvas({activity, isSandbox}) {
                                                     id='dropdown'
                                                     menu={{
                                                         items,
-                                                        selectable: true,
-                                                        defaultSelectedKeys: ['0'],
                                                         onClick,
-
                                                     }}
                                                     placement="bottom"
                                                 >
-
                                                     <a onClick={(e) => e.preventDefault()}>
                                                         <Typography.Link>
                                                             <Space>
-                                                                Language
+                                                                {languageChoicePublic}
                                                                 <DownOutlined/>
                                                             </Space>
                                                         </Typography.Link>
@@ -375,30 +374,6 @@ export default function PublicCanvas({activity, isSandbox}) {
 
             {/* This xml is for the blocks' menu we will provide. Here are examples on how to include categories and subcategories */}
             {generateToolbox(activity, languageChoicePublic)}
-            {/*<xml id='toolbox' is='Blockly workspace'>*/}
-            {/*    {*/}
-            {/*        // Maps out block categories*/}
-            {/*        activity &&*/}
-            {/*        activity.toolbox &&*/}
-            {/*        activity.toolbox.map(([category, blocks]) => (*/}
-            {/*            <category name={category} is='Blockly category' key={category}>*/}
-            {/*                {*/}
-            {/*                    // maps out blocks in category*/}
-            {/*                    // eslint-disable-next-line*/}
-            {/*                    blocks.map((block) => {*/}
-            {/*                        return (*/}
-            {/*                            <block*/}
-            {/*                                type={block.name}*/}
-            {/*                                is='Blockly block'*/}
-            {/*                                key={block.name}*/}
-            {/*                            />*/}
-            {/*                        );*/}
-            {/*                    })*/}
-            {/*                }*/}
-            {/*            </category>*/}
-            {/*        ))*/}
-            {/*    }*/}
-            {/*</xml>*/}
 
             {compileError && (
                 <Alert
