@@ -2,6 +2,8 @@ import { Modal, Button, Typography, Menu,message } from 'antd';
 import React, { useState } from 'react';
 import { getArduino, getXml, getJS } from '../../Utils/helpers';
 import languageGif from '/src/assets/LanguageChangeDemo.gif';
+import LoopTooLong from '/src/assets/LoopTooLong.png';
+import runCode from '/src/assets/runCode.png';
 
 export default function HelpModal(props) {
   const [visible, setVisible] = useState(false);
@@ -54,7 +56,15 @@ export default function HelpModal(props) {
           </li>          
         </ul>
         <p>To switch the language being worked in, hover over the dropdown labeled <b>Language</b> and select your language. A message will appear confirming the language output has switched.</p>
-        <img src={languageGif} alt="Cursor hovering over 'Language' dropdown and switching selected language"></img>
+        <img src={languageGif} alt="Video of cursor hovering over 'Language' dropdown and switching selected language"></img>
+        <p><b>Running your Code</b></p>
+        <p>Running code is currently supported through <a href="https://neil.fraser.name/software/JS-Interpreter/docs.html">JS-Interpreter</a> and is only available when the chosen language is JavaScript or Python.
+        When JavaScript or Python is the current language, a <b>Run</b> button appears. Click this button, then click Run and a window showing the output of your code will display.</p>
+        <img src={runCode} alt="Image showing the 'Run Code' button."></img>
+        <p>When using <a href="https://en.wikipedia.org/wiki/For_loop">for-loops </a>in a program, a problem can arrise where the loop continues enlessly.
+        This results in the program freezing and potentially crashing. To prevent this, we currently have an upper limit to the amount of loops a program can make. If your program is too long, 
+        you will see the message <b>"Loop too long!"</b> and the output performed before the limit was reached will be displayed.</p>
+        <img src={LoopTooLong} alt="Image of 'Loop too long!' message."></img>
       </Modal>
     </div>
   );
