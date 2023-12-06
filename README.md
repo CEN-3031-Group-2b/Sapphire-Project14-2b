@@ -74,6 +74,15 @@ made to the languages for future maintenance and the addition of other languages
 
 [Github Project Board](https://github.com/orgs/CEN-3031-Group-2b/projects/1/views/1?layout=board)
 
+# 2. Product Planning
+
+2.1 About the User Stories Creation Process
+
+> a. The User Stories were created with the target audience of new programmers in grade school in mind. Because of this, most of the focus was on making sure the new additions to the workspace do not overcrowd the user experience and make learning coding fundamentals more difficult.
+
+>b. The user stories were mostly created before members of the team were able to fully grasp the scope of the project and how the Code-Sparks website was organized. Becaause of this, many of the user stories had to be edited in order to match the features that were planned to be implemented. The main change was a departure from having multiple block frameworks in the workspace. This was deemed out of the scope of what we could accomplish in the given time and our focus was shifted into expanding the features of Blockly and adding support for multiple languages.
+
+>Another specific change from the initial user stories was not creating a way for a teacher to view a portfolio of each student, with activites done in different langauges still being shown together. Again, this was deemded out the scope for what we were hoping to accomplish and this user story was scrapped in order to shift the focus on the other user stories.
 
 
 
