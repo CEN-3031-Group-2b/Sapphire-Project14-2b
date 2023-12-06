@@ -46,6 +46,12 @@
 > 1.1 Brief Description of the Project
 
 
+>To research and design an architecture to allow the application to integrate
+additional programming frameworks. Then pick a framework and add it the Code-sparks.org.
+Deciding which languages would be the best to add and building them so that changes can be
+made to the languages for future maintenance and the addition of other languages
+
+
 
 
 
