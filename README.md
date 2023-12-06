@@ -52,6 +52,22 @@ Deciding which languages would be the best to add and building them so that chan
 made to the languages for future maintenance and the addition of other languages
 
 
+> 1.2 Major Features proposed & Completed
+
+
+> For this developmental effort, the team prioritized creating a way for stundent in the worksapce/sandbox to change which language they are working in, and chnage the toolbox correspondingly. We wanted to make this as streamlined as possible, with features such as a help button in order to assist students
+
+<b>
+
+|Proposed|Completed|
+|--------|---------|
+|Change toolbox on language switch|Change toolbox on language switch|
+|Allow Teacher to change language in activity editor| | |
+|Help page to assist students in switching languages| Help page to assist students in switching languages|
+|Show Compiled code in any language chosen|  Show Compiled code in any language chosen|
+|Run JS and Python code in browser to show output to student| Run JS and Python code in browser to show output to student|
+
+
 
 
 
