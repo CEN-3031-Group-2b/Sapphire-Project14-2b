@@ -67,6 +67,14 @@ made to the languages for future maintenance and the addition of other languages
 |Show Compiled code in any language chosen|  Show Compiled code in any language chosen|
 |Run JS and Python code in browser to show output to student| Run JS and Python code in browser to show output to student|
 
+<b>
+> 1.3 Links to Useful Project Information
+ 
+[ Github](https://github.com/CEN-3031-Group-2b/Sapphire-Project14-2b)
+
+[Github Project Board](https://github.com/orgs/CEN-3031-Group-2b/projects/1/views/1?layout=board)
+
+
 
 
 
