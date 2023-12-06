@@ -86,5 +86,9 @@ made to the languages for future maintenance and the addition of other languages
 
 
 
+2.2 About the Wireframes Creation Process
+
+
+
 
 
