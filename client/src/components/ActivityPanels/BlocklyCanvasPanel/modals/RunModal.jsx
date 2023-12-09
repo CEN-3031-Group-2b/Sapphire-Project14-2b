@@ -3,12 +3,21 @@ import React, { useState } from 'react';
 import Interpreter from 'js-interpreter';
 import { getJS } from '../../Utils/helpers';
 
+// This file contains the implementation of the Run button as well as the implementation of JS Interpreter
+
 export default function RunModal(props) {
   const [visible, setVisible] = useState(false);
   const { title, workspaceRef } = props;
   const [output, setOutput] = useState([]);
   let tempOutput = [];
   const [loopTooLong, setLoopTooLong] = useState(false);
+
+  // ShowModal is run on click of the run button. 
+  // The code is gotten from getJS, which is how Blockly converts the blocks to JS code using a generator.
+  // A JS-Interpreter interpreter is made, and the code and Api is passed into it. The API is explained further down.
+  // To implement safe looping, a maximum of 1000 lines of code is stepped through. This can be changed to allow for longer/shorter
+  // programs. 
+  // The output of the interpreter is saved, and displayed in the return section of this code. 
 
   const showModal = () => {
     setLoopTooLong(false);
@@ -32,6 +41,9 @@ export default function RunModal(props) {
     setVisible(false);
     setOutput([]);
   };
+
+  // This API allows the interpreter to intercept "alert()" code and instead print the contents to the screen.
+  // The contents of the alert() command is saved into an array, which is displayed later in the return block.
 
   function initApi(interpreter, globalObject) 
   {

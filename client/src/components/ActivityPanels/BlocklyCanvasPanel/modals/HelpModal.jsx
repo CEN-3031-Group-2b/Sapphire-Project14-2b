@@ -5,6 +5,10 @@ import languageGif from '/src/assets/LanguageChangeDemo.gif';
 import LoopTooLong from '/src/assets/LoopTooLong.png';
 import runCode from '/src/assets/runCode.png';
 
+// This file contains the code for the help button. The contents of the help button are found in the return section.
+// languageGif, LoopTooLong, and runCode are example images and gif used to help illustrate the funcionality we have added.
+// When the help button is pressed, we display the help text and images.
+
 export default function HelpModal(props) {
   const [visible, setVisible] = useState(false);
   const { title, workspaceRef } = props;
@@ -62,8 +66,8 @@ export default function HelpModal(props) {
         <p>Running code is currently supported through <a href="https://neil.fraser.name/software/JS-Interpreter/docs.html">JS-Interpreter</a> and is only available when the chosen language is JavaScript or Python.
         When JavaScript or Python is the current language, a <b>Run</b> button appears. Click this button, then click Run and a window showing the output of your code will display.</p>
         <img src={runCode} alt="Image showing the 'Run Code' button."></img>
-        <p>When using <a href="https://en.wikipedia.org/wiki/For_loop">for-loops </a>in a program, a problem can arrise where the loop continues enlessly.
-        This results in the program freezing and potentially crashing. To prevent this, we currently have an upper limit to the amount of loops a program can make. If your program is too long, 
+        <p>When using <a href="https://en.wikipedia.org/wiki/For_loop">for-loops </a>in a program, a problem can arise where the loop continues endlessly.
+        This results in the program freezing and potentially crashing. To prevent this, we have a limit on the lines of code a program can execute. If your program is too long, 
         you will see the message <b>"Loop too long!"</b> and the output performed before the limit was reached will be displayed.</p>
         <img src={LoopTooLong} alt="Image of 'Loop too long!' message."></img>
       </Modal>
