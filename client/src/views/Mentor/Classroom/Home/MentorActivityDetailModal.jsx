@@ -1,4 +1,5 @@
-import { Button, Form, Input, message, Modal } from "antd"
+import { Button, Form, Input, message, Modal,  Spin, Row, Col, Alert, Dropdown, Menu, Space, Typography  } from "antd"
+import { DownOutlined } from '@ant-design/icons'
 import React, { useEffect, useState } from "react"
 import { useNavigate } from "react-router-dom"
 import {
@@ -10,6 +11,8 @@ import {
 } from "../../../../Utils/requests"
 import "../../../ContentCreator/ActivityEditor/ActivityEditor.less"
 import ActivityComponentTags from "../../../ContentCreator/ActivityEditor/components/ActivityComponentTags"
+
+
 
 const SCIENCE = 1
 const MAKING = 2
@@ -34,7 +37,28 @@ const MentorActivityDetailModal = ({
   const [activityDetailsVisible, setActivityDetailsVisible] = useState(false)
   const [linkError, setLinkError] = useState(false)
   const [submitButton, setSubmitButton] = useState(0)
+  const [languageChoice, setLanguageChoice] = useState("Arduino")
   const navigate = useNavigate()
+
+  const items = [
+    {
+      key: '0',
+      label: "Arduino",
+    },
+    {
+      key: '1',
+      label: "JavaScript",
+    },
+    {
+      key: '2',
+      label: "Python",
+    },
+  ];
+  const onClick =  ({ key }) => {
+    message.info("Activity Language Changed to " + items[key ].label);
+    
+    setLanguageChoice(items[key ].label)
+  };
 
   useEffect(() => {
     const showActivityDetailsModal = async () => {
@@ -94,6 +118,14 @@ const MentorActivityDetailModal = ({
     navigate("/activity")
   }
 
+  const handleLanguageChange = async (event) => {
+
+    setLanguageChoice(event.target.value);
+    
+ 
+  };
+  
+
   const handleViewActivityTemplate = async activity => {
     const allToolBoxRes = await getActivityToolboxAll()
     delete activity.selectedToolbox
@@ -104,6 +136,7 @@ const MentorActivityDetailModal = ({
     navigate("/activity")
   }
   const handleSave = async () => {
+    
     if (link) {
       const goodLink = checkURL(link)
       if (!goodLink) {
@@ -268,6 +301,29 @@ const MentorActivityDetailModal = ({
             span: 30,
           }}
         >
+          < Dropdown
+                        id='dropdown'
+                        menu={{
+                          items,
+                          selectable: true,
+                          defaultSelectedKeys: ['0'],
+                          onClick,
+                          
+                        }}
+                        placement="bottom"
+                      >
+                        
+                        <a onClick={(e) =>e.preventDefault()}>
+                          <Typography.Link >
+                            <Space>
+                              Language
+                              <DownOutlined />
+                            </Space>
+                          </Typography.Link>
+                        </a>
+                      </Dropdown>
+          
+         
           <button id="save--set-activity-btn" onClick={() => setSubmitButton(1)}>
             Edit Student Template
           </button>
@@ -298,6 +354,7 @@ const MentorActivityDetailModal = ({
     </Modal>
     </div>
   )
+  
 }
 
 export default MentorActivityDetailModal
