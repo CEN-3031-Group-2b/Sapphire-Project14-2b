@@ -2,10 +2,10 @@
     
 |Completed|
 |---------|
-|Change toolbox on language switch|
-|Help page to assist students in switching languages|
-|Show Compiled code in any language chosen|
-|Run JS and Python code in browser to show output to student|
+|Change toolbox on language switch ![Change toolbox on language switch](/images/confirm.png)|
+|Help page to assist students in switching languages ![](/images/help-page.png)|
+|Show Compiled code in any language chosen ![](/images/compiled-code.png)|
+|Run JS and Python code in browser to show output to student ![](/images/code-output.png)|
 
 # **Instructions for how to run the project locally** 
 
